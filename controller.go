@@ -119,32 +119,32 @@ func NewController(
 
 	glog.Info("Setting up event handlers")
 	// Set up an event handler for when Foo resources change
-        fooInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
-                AddFunc: func(obj interface{}) {
-                        if foo, ok := obj.(*samplev1alpha1.Foo); ok {
-                                glog.V(3).Infof("foo.added: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
-                                        foo.GetUID())
-                        }
-                        controller.enqueueFoo(obj)
-                },
-                UpdateFunc: func(old, new interface{}) {
-                        if foo, ok := old.(*samplev1alpha1.Foo); ok {
-                                glog.V(3).Infof("foo.updated[OLD]: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
-                                        foo.GetUID())
-                        }
-                        if foo, ok := new.(*samplev1alpha1.Foo); ok {
-                                glog.V(3).Infof("foo.updated[NEW]: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
-                                        foo.GetUID())
-                        }
-                        controller.enqueueFoo(new)
-                },
-                DeleteFunc: func(obj interface{}) {
-                        if foo, ok := obj.(*samplev1alpha1.Foo); ok {
-                                glog.V(3).Infof("foo.deleted: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
-                                        foo.GetUID())
-                        }
-                },
-        })
+	fooInformer.Informer().AddEventHandler(cache.ResourceEventHandlerFuncs{
+		AddFunc: func(obj interface{}) {
+			if foo, ok := obj.(*samplev1alpha1.Foo); ok {
+				glog.V(3).Infof("foo.added: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
+					foo.GetUID())
+			}
+			controller.enqueueFoo(obj)
+		},
+		UpdateFunc: func(old, new interface{}) {
+			if foo, ok := old.(*samplev1alpha1.Foo); ok {
+				glog.V(3).Infof("foo.updated[OLD]: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
+					foo.GetUID())
+			}
+			if foo, ok := new.(*samplev1alpha1.Foo); ok {
+				glog.V(3).Infof("foo.updated[NEW]: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
+					foo.GetUID())
+			}
+			controller.enqueueFoo(new)
+		},
+		DeleteFunc: func(obj interface{}) {
+			if foo, ok := obj.(*samplev1alpha1.Foo); ok {
+				glog.V(3).Infof("foo.deleted: %v.%v -> %v", foo.GetName(), foo.GetNamespace(),
+					foo.GetUID())
+			}
+		},
+	})
 	// Set up an event handler for when Deployment resources change. This
 	// handler will lookup the owner of the given Deployment, and if it is
 	// owned by a Foo resource will enqueue that Foo resource for
